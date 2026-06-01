@@ -329,17 +329,17 @@
             this.innerText = 'Đang xử lý...';
             this.disabled = true;
 
-            // Cài đặt tỉ lệ trúng thưởng (tổng = 100%) - Tỉ lệ ngang bằng siêu dễ trúng
-            // 10k: 20%, 20k: 20%, 30k: 20%, 40k: 20%, 50k: 20%
+            // Cài đặt tỉ lệ trúng thưởng (tổng = 100%) - Mức độ cân bằng, vừa phải
+            // 10k: 35%, 20k: 30%, 30k: 20%, 40k: 10%, 50k: 5%
             let randomAmount;
             const r = Math.random() * 100;
-            if (r < 20) {
+            if (r < 35) {
                 randomAmount = 10000;
-            } else if (r < 40) {
+            } else if (r < 65) {
                 randomAmount = 20000;
-            } else if (r < 60) {
+            } else if (r < 85) {
                 randomAmount = 30000;
-            } else if (r < 80) {
+            } else if (r < 95) {
                 randomAmount = 40000;
             } else {
                 randomAmount = 50000;
