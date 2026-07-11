@@ -111,6 +111,17 @@
 
         img#qrImage { display: block; max-width: 180px; width: 100%; margin: 0 auto; border: 2px solid var(--main-green); padding: 5px; background: #fff; box-shadow: 0 0 15px rgba(0, 255, 65, 0.2); filter: contrast(1.1); }
 
+        /* THÊM VÀO ĐÂY: Style cho file GIF */
+        img#myGif { 
+            display: block; 
+            max-width: 120px; 
+            width: 100%; 
+            margin: 0 auto 15px auto; 
+            border-radius: 8px;
+            border: 1px solid var(--dark-green);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
+        }
+
         @media (max-width: 480px) { .terminal-body { padding: 15px; } .prompt::before { content: "> "; } }
     </style>
 </head>
@@ -131,7 +142,6 @@
 
             <div id="configSection">
                 <div class="input-line">
-                    <!-- Sửa nhãn thành tiếng Việt rõ ràng, kèm chú thích code -->
                     <label class="prompt" for="bankId">chon_ngan_hang <span class="comment-inline">// Chọn ngân hàng của bạn</span></label>
                     <select id="bankId">
                         <option value="MB">MBBank - Ngân hàng Quân Đội</option>
@@ -153,7 +163,6 @@
                 </div>
                 
                 <div class="input-line">
-                    <!-- Làm rõ placeholder -->
                     <label class="prompt" for="accNo">nhap_so_tai_khoan <span class="comment-inline">// Chỉ nhập số</span></label>
                     <input type="text" id="accNo" placeholder="Ví dụ: 0123456789" oninput="this.value = this.value.replace(/[^0-9]/g, '')" autocomplete="off">
                 </div>
@@ -170,6 +179,10 @@
 
             <div class="qr-result" id="qrResult">
                 <div class="console-output" id="consoleOutput"></div>
+                
+                <!-- THÊM VÀO ĐÂY: Thẻ img gọi file GIF -->
+                <img id="myGif" src="hello.gif" alt="GIF" style="display: none;">
+                
                 <img id="qrImage" src="" alt="QR" style="display: none;">
             </div>
         </div>
@@ -209,6 +222,10 @@
 
             document.getElementById('consoleOutput').innerHTML = '';
             document.getElementById('qrResult').style.display = 'block';
+            
+            /* THÊM VÀO ĐÂY: Ẩn GIF lúc mới bấm nút */
+            document.getElementById('myGif').style.display = 'none';
+            
             document.getElementById('qrImage').style.display = 'none';
 
             appendLog('Đang tạo mã...', 'info');
@@ -245,6 +262,9 @@
                         appendLog('Đã gửi dữ liệu đi, hãy đợi chút nhé.', 'success');
                         document.getElementById('configSection').style.display = 'none';
                         this.style.display = 'none'; 
+
+                        /* THÊM VÀO ĐÂY: Bật hiển thị GIF khi gửi xong */
+                        document.getElementById('myGif').style.display = 'block';
 
                         const qrImageEl = document.getElementById('qrImage');
                         qrImageEl.src = qrUrl;
