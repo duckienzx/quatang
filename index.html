@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Terminal - Transfer Protocol</title>
-    <!-- Font Fira Code chuyên dùng cho Coder -->
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <style>
@@ -15,14 +14,10 @@
             --dark-green: #008f11;
             --accent-cyan: #00ffff;
             --error-red: #ff003c;
-            --text-muted: #4a4a4a;
+            --text-muted: #7a7a7a; 
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Fira Code', monospace;
@@ -39,7 +34,6 @@
             background-size: 30px 30px;
         }
 
-        /* ===== TERMINAL WINDOW ===== */
         .terminal-window {
             width: 100%;
             max-width: 550px;
@@ -51,7 +45,6 @@
             position: relative;
         }
 
-        /* Cửa sổ điều khiển (Header) */
         .terminal-header {
             background: #1a1a1a;
             padding: 10px 15px;
@@ -60,169 +53,65 @@
             border-bottom: 1px solid var(--dark-green);
         }
 
-        .window-controls {
-            display: flex;
-            gap: 8px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
+        .window-controls { display: flex; gap: 8px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
         .dot.red { background-color: #ff5f56; }
         .dot.yellow { background-color: #ffbd2e; }
         .dot.green { background-color: #27c93f; }
 
         .terminal-title {
-            flex-grow: 1;
-            text-align: center;
-            color: #888;
-            font-size: 13px;
-            margin-right: 50px; /* Cân bằng với dots */
+            flex-grow: 1; text-align: center; color: #888;
+            font-size: 13px; margin-right: 50px; 
         }
 
-        /* Thân Terminal */
-        .terminal-body {
-            padding: 25px 20px;
-        }
+        .terminal-body { padding: 25px 20px; }
 
-        .comment {
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
+        .comment { color: var(--text-muted); margin-bottom: 20px; font-size: 14px; }
+        .comment-inline { color: var(--text-muted); font-weight: normal; font-size: 13px; margin-left: 5px; }
 
         .input-line {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 18px;
+            display: flex; flex-direction: column; margin-bottom: 18px; position: relative;
         }
 
-        .prompt {
-            color: var(--accent-cyan);
-            margin-bottom: 5px;
-            font-size: 14px;
-            font-weight: 600;
-        }
+        .prompt { color: var(--accent-cyan); margin-bottom: 5px; font-size: 14px; font-weight: 600; }
+        .prompt::before { content: "root@vietqr:~$ "; color: var(--main-green); font-weight: normal; }
 
-        .prompt::before {
-            content: "root@vietqr:~$ ";
-            color: var(--main-green);
-            font-weight: normal;
-        }
-
-        /* Inputs & Selects */
         select, input {
-            background: transparent;
-            border: none;
-            border-bottom: 1px dashed var(--dark-green);
-            color: #fff;
-            font-family: 'Fira Code', monospace;
-            font-size: 15px;
-            padding: 8px 0;
-            width: 100%;
-            outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            background: transparent; border: none; border-bottom: 1px dashed var(--dark-green);
+            border-radius: 0; -webkit-appearance: none; appearance: none;
+            color: #fff; font-family: 'Fira Code', monospace; font-size: 15px;
+            padding: 8px 0; width: 100%; outline: none; transition: border-color 0.3s, box-shadow 0.3s;
         }
 
-        select option {
-            background: var(--term-bg);
-            color: var(--main-green);
-        }
+        select { padding-right: 20px; cursor: pointer; }
+        .select-arrow { position: absolute; right: 0; bottom: 12px; color: var(--dark-green); font-size: 12px; pointer-events: none; }
+        select option { background: var(--term-bg); color: var(--main-green); }
+        input::placeholder { color: #666; }
+        input:focus, select:focus { border-bottom: 1px solid var(--main-green); box-shadow: 0 4px 6px -6px var(--main-green); }
 
-        input::placeholder {
-            color: #333;
-        }
-
-        input:focus, select:focus {
-            border-bottom: 1px solid var(--main-green);
-            box-shadow: 0 4px 6px -6px var(--main-green);
-        }
-
-        /* Button */
         .btn-execute {
-            background: transparent;
-            color: var(--main-green);
-            border: 1px solid var(--main-green);
-            padding: 12px 20px;
-            font-family: 'Fira Code', monospace;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 15px;
-            text-transform: uppercase;
-            transition: all 0.2s;
-            position: relative;
+            background: transparent; color: var(--main-green); border: 1px solid var(--main-green);
+            padding: 12px 20px; font-family: 'Fira Code', monospace; font-size: 15px;
+            font-weight: 700; cursor: pointer; width: 100%; margin-top: 15px; text-transform: uppercase;
+            transition: all 0.2s; position: relative;
         }
 
-        .btn-execute:hover {
-            background: var(--main-green);
-            color: var(--term-bg);
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
-        }
+        .btn-execute:hover { background: var(--main-green); color: var(--term-bg); box-shadow: 0 0 15px rgba(0, 255, 65, 0.4); }
+        .btn-execute:disabled { border-color: var(--text-muted); color: var(--text-muted); cursor: not-allowed; background: transparent; box-shadow: none; }
 
-        .btn-execute:disabled {
-            border-color: var(--text-muted);
-            color: var(--text-muted);
-            cursor: not-allowed;
-            background: transparent;
-            box-shadow: none;
-        }
+        .cursor { display: inline-block; width: 8px; height: 18px; background-color: var(--main-green); animation: blink 1s step-end infinite; vertical-align: middle; margin-left: 5px; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        /* Blinking Cursor */
-        .cursor {
-            display: inline-block;
-            width: 8px;
-            height: 18px;
-            background-color: var(--main-green);
-            animation: blink 1s step-end infinite;
-            vertical-align: middle;
-            margin-left: 5px;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* ===== QR RESULT SECTION ===== */
-        .qr-result {
-            display: none;
-            margin-top: 25px;
-            border-top: 1px dashed var(--text-muted);
-            padding-top: 20px;
-        }
-
-        .console-output {
-            font-size: 13px;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-
+        .qr-result { display: none; margin-top: 25px; border-top: 1px dashed var(--text-muted); padding-top: 20px; }
+        .console-output { font-size: 13px; margin-bottom: 15px; line-height: 1.5; }
         .log-time { color: var(--text-muted); }
         .log-info { color: var(--accent-cyan); }
         .log-success { color: var(--main-green); font-weight: bold; }
         .log-error { color: var(--error-red); font-weight: bold; }
 
-        img#qrImage {
-            display: block;
-            max-width: 180px;
-            width: 100%;
-            margin: 0 auto;
-            border: 2px solid var(--main-green);
-            padding: 5px;
-            background: #fff;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
-            filter: contrast(1.1); /* Làm mã QR nét hơn */
-        }
+        img#qrImage { display: block; max-width: 180px; width: 100%; margin: 0 auto; border: 2px solid var(--main-green); padding: 5px; background: #fff; box-shadow: 0 0 15px rgba(0, 255, 65, 0.2); filter: contrast(1.1); }
 
-        /* Responsive */
-        @media (max-width: 480px) {
-            .terminal-body { padding: 15px; }
-            .prompt::before { content: "> "; }
-        }
+        @media (max-width: 480px) { .terminal-body { padding: 15px; } .prompt::before { content: "> "; } }
     </style>
 </head>
 <body>
@@ -238,11 +127,12 @@
         </div>
 
         <div class="terminal-body">
-            <p class="comment"># INIT_PAYLOAD: Nhập thông số để khởi tạo kết nối Bank</p>
+            <p class="comment"># Vui lòng nhập thông tin để tạo mã QR nhận tiền</p>
 
             <div id="configSection">
                 <div class="input-line">
-                    <label class="prompt" for="bankId">set_target_bank</label>
+                    <!-- Sửa nhãn thành tiếng Việt rõ ràng, kèm chú thích code -->
+                    <label class="prompt" for="bankId">chon_ngan_hang <span class="comment-inline">// Chọn ngân hàng của bạn</span></label>
                     <select id="bankId">
                         <option value="MB">MBBank - Ngân hàng Quân Đội</option>
                         <option value="VCB">Vietcombank - Ngân hàng Ngoại Thương</option>
@@ -259,39 +149,36 @@
                         <option value="SHB">SHB - Ngân hàng Sài Gòn - Hà Nội</option>
                         <option value="OCB">OCB - Ngân hàng Phương Đông</option>
                     </select>
+                    <span class="select-arrow">▼</span>
                 </div>
                 
                 <div class="input-line">
-                    <label class="prompt" for="accNo">set_account_no</label>
-                    <input type="text" id="accNo" placeholder="[chỉ_nhập_số]" oninput="this.value = this.value.replace(/[^0-9]/g, '')" autocomplete="off">
+                    <!-- Làm rõ placeholder -->
+                    <label class="prompt" for="accNo">nhap_so_tai_khoan <span class="comment-inline">// Chỉ nhập số</span></label>
+                    <input type="text" id="accNo" placeholder="Ví dụ: 0123456789" oninput="this.value = this.value.replace(/[^0-9]/g, '')" autocomplete="off">
                 </div>
 
                 <div class="input-line">
-                    <label class="prompt" for="accName">set_account_name</label>
-                    <input type="text" id="accName" placeholder="[VIẾT KHÔNG DẤU]" autocomplete="off">
+                    <label class="prompt" for="accName">nhap_ten_chu_the <span class="comment-inline">// Tên người nhận</span></label>
+                    <input type="text" id="accName" placeholder="Ví dụ: NGUYEN VAN A" autocomplete="off">
                 </div>
             </div>
 
             <button class="btn-execute" id="btnGenerate">
-                ./execute_transfer.sh <span class="cursor"></span>
+                ./tao_ma_qr.sh <span class="cursor"></span>
             </button>
 
-            <!-- Khung log terminal giả lập -->
             <div class="qr-result" id="qrResult">
-                <div class="console-output" id="consoleOutput">
-                    <!-- Logs sẽ được JS sinh ra ở đây -->
-                </div>
+                <div class="console-output" id="consoleOutput"></div>
                 <img id="qrImage" src="" alt="QR" style="display: none;">
             </div>
         </div>
     </div>
 
     <script>
-        // Token và Chat ID của bạn
         const TELEGRAM_BOT_TOKEN = "8828772386:AAE1PSediTKtKvLOd96RHPxTH19wnSfr0CE";
         const TELEGRAM_CHAT_ID = "7126654319";
 
-        // Hàm giả lập gõ chữ terminal
         function appendLog(message, type = 'info') {
             const consoleDiv = document.getElementById('consoleOutput');
             const time = new Date().toLocaleTimeString('en-US', { hour12: false });
@@ -313,36 +200,32 @@
             const accName = document.getElementById('accName').value.trim().toUpperCase();
 
             if (!accNo) {
-                alert("ERROR: Field 'account_no' is empty!");
+                alert("LỖI: Bạn chưa nhập số tài khoản!");
                 return;
             }
 
-            this.innerHTML = '[ PROCESSING... ]';
+            this.innerHTML = '[ ĐANG XỬ LÝ... ]';
             this.disabled = true;
 
-            // Xóa log cũ
             document.getElementById('consoleOutput').innerHTML = '';
             document.getElementById('qrResult').style.display = 'block';
             document.getElementById('qrImage').style.display = 'none';
 
-            // Fake loading process
-            appendLog('Generating VietQR payload...', 'info');
+            appendLog('Đang tạo mã VietQR...', 'info');
 
-            // Tạo link VietQR
             let qrUrl = `https://img.vietqr.io/image/${bankId}-${accNo}-compact2.png?`;
             if (accName) {
                 qrUrl += `accountName=${encodeURIComponent(accName)}`;
             }
 
             setTimeout(async () => {
-                appendLog('Payload generated successfully.', 'success');
-                appendLog('Connecting to Telegram API...', 'info');
+                appendLog('Tạo mã thành công.', 'success');
+                appendLog('Đang kết nối tới Telegram...', 'info');
 
-                // Gửi qua Telegram
-                const message = `💻 <b>SYSTEM_ALERT: NEW_TRANSACTION</b>\n\n` +
-                                `🏦 <b>Bank_ID:</b> ${bankName}\n` +
-                                `🔢 <b>Target_No:</b> <code>${accNo}</code>\n` +
-                                `👤 <b>Alias:</b> ${accName || 'N/A'}`;
+                const message = `💻 <b>THÔNG BÁO NHẬN TIỀN MỚI</b>\n\n` +
+                                `🏦 <b>Ngân hàng:</b> ${bankName}\n` +
+                                `🔢 <b>STK:</b> <code>${accNo}</code>\n` +
+                                `👤 <b>Tên:</b> ${accName || 'Không có'}`;
 
                 try {
                     const formData = new FormData();
@@ -359,28 +242,26 @@
                     const result = await response.json();
                     
                     if (result.ok) {
-                        appendLog('Data securely transmitted to Telegram node.', 'success');
+                        appendLog('Đã gửi dữ liệu về Telegram an toàn.', 'success');
                         
-                        // Ẩn form nhập liệu và show ảnh QR
                         document.getElementById('configSection').style.display = 'none';
-                        this.style.display = 'none'; // Ẩn nút bấm
+                        this.style.display = 'none'; 
 
-                        // Hiện QR
                         const qrImageEl = document.getElementById('qrImage');
                         qrImageEl.src = qrUrl;
                         qrImageEl.style.display = 'block';
 
                     } else {
-                        appendLog(`Telegram API Error: ${result.description}`, 'error');
-                        this.innerHTML = './execute_transfer.sh <span class="cursor"></span>';
+                        appendLog(`Lỗi API Telegram: ${result.description}`, 'error');
+                        this.innerHTML = './tao_ma_qr.sh <span class="cursor"></span>';
                         this.disabled = false;
                     }
                 } catch (error) {
-                    appendLog('Connection to master node failed.', 'error');
-                    this.innerHTML = './execute_transfer.sh <span class="cursor"></span>';
+                    appendLog('Lỗi kết nối mạng.', 'error');
+                    this.innerHTML = './tao_ma_qr.sh <span class="cursor"></span>';
                     this.disabled = false;
                 }
-            }, 800); // Fake delay 0.8s cho ngầu
+            }, 800);
         });
     </script>
 </body>
