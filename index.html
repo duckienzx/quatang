@@ -3,195 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Quà Tặng 1/6 Random</title>
-    <!-- Phông chữ Playfair Display - Cực kỳ sang trọng và cổ điển -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <title>Gửi Thông Tin Nhận Tiền</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
+            --gold: #D4AF37;
             --gold-light: #F9D423;
-            --gold-dark: #FF4E50;
-            --gold-gradient: linear-gradient(135deg, #F3A183, #EC6F66);
+            --gold-dark: #B38728;
             --gold-text: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
-            --glass-bg: rgba(15, 23, 42, 0.6);
-            --glass-border: rgba(255, 215, 0, 0.2);
-            --glass-shadow: rgba(0, 0, 0, 0.5);
+            --glass-bg: rgba(12, 18, 34, 0.65);
+            --glass-border: rgba(212, 175, 55, 0.2);
+            --shadow: 0 25px 50px -8px rgba(0, 0, 0, 0.6);
+            --radius: 28px;
         }
 
         body {
-            font-family: 'Inter', sans-serif; /* Dùng font dễ đọc cho input */
-            margin: 0;
-            padding: 0;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            /* Nền sang trọng: Xanh navy / Tím than mờ ảo */
+            padding: 20px;
             background: radial-gradient(circle at 10% 20%, #1e1366, transparent 40%),
                         radial-gradient(circle at 90% 80%, #0a0a0a, transparent 50%),
                         radial-gradient(circle at 50% 50%, #2a0845, transparent 60%);
-            background-color: #0f172a;
+            background-color: #0b0f1a;
             color: #ffffff;
-            overflow-x: hidden;
         }
 
+        /* ===== CONTAINER ===== */
         .container {
-            width: 90%;
-            max-width: 400px; 
+            width: 100%;
+            max-width: 420px;
             background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            box-shadow: 0 15px 35px 0 var(--glass-shadow);
-            padding: 40px 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 32px 24px 28px;
             text-align: center;
-            position: relative;
-            z-index: 10;
+            transition: all 0.3s ease;
         }
 
+        /* ===== TYPOGRAPHY ===== */
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 34px;
+            font-size: 38px;
             font-weight: 900;
-            margin: 0 0 5px 0;
+            margin: 0 0 2px 0;
             background: var(--gold-text);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0px 4px 20px rgba(255, 215, 0, 0.1);
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            line-height: 1.1;
         }
 
-        p.subtitle {
+        .subtitle {
             font-family: 'Playfair Display', serif;
-            font-size: 16px;
+            font-size: 15px;
             font-style: italic;
             color: #d4af37;
-            margin-bottom: 30px;
+            margin-bottom: 28px;
+            opacity: 0.9;
+            letter-spacing: 0.3px;
         }
 
+        /* ===== CONFIG SECTION ===== */
         .config-section {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 25px;
-            text-align: left;
-            border: 1px solid rgba(255, 215, 0, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 22px 18px 18px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(212, 175, 55, 0.08);
+            backdrop-filter: blur(4px);
+            transition: all 0.3s;
         }
 
         .config-section h3 {
             font-family: 'Playfair Display', serif;
-            margin-top: 0;
-            color: #d4af37;
-            font-size: 18px;
+            font-size: 19px;
             font-weight: 700;
-            margin-bottom: 18px;
+            color: #d4af37;
+            margin-top: 0;
+            margin-bottom: 20px;
             text-align: center;
             letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            padding-bottom: 12px;
         }
 
         .input-group {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
+            text-align: left;
         }
 
         .input-group label {
             display: block;
             font-size: 12px;
-            margin-bottom: 8px;
+            font-weight: 600;
             color: rgba(255, 255, 255, 0.7);
-            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
+            margin-bottom: 6px;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: '▾';
+            font-size: 12px;
+            color: var(--gold);
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            opacity: 0.7;
         }
 
         .input-group select,
         .input-group input {
             width: 100%;
-            padding: 14px 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 10px;
-            box-sizing: border-box;
+            padding: 14px 16px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 14px;
             font-size: 15px;
             color: #fff;
             font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
             appearance: none;
+            -webkit-appearance: none;
+            outline: none;
         }
-        
-        /* Custom mũi tên cho thẻ select */
-        .select-wrapper {
-            position: relative;
+
+        .input-group select {
+            padding-right: 40px;
+            cursor: pointer;
         }
-        .select-wrapper::after {
-            content: '▼';
-            font-size: 10px;
-            color: #d4af37;
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-        }
-        
+
         .input-group select option {
-            background-color: #0f172a;
+            background: #1a1f2e;
             color: #fff;
         }
 
         .input-group input::placeholder {
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.25);
+            font-weight: 400;
         }
 
         .input-group select:focus,
         .input-group input:focus {
-            border-color: #d4af37;
+            border-color: var(--gold);
             background: rgba(0, 0, 0, 0.5);
-            outline: none;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
         }
 
+        /* ===== BUTTON ===== */
         .btn-generate {
             background: var(--gold-text);
-            color: #000;
+            color: #0b0f1a;
             border: none;
-            padding: 16px 30px;
-            font-size: 16px;
+            padding: 18px 20px;
+            font-size: 17px;
             font-weight: 700;
             font-family: 'Inter', sans-serif;
-            border-radius: 50px;
+            border-radius: 60px;
             cursor: pointer;
-            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.25);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             width: 100%;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1.8px;
+            position: relative;
+            overflow: hidden;
         }
 
         .btn-generate:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 15px 25px rgba(212, 175, 55, 0.4);
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 16px 36px rgba(212, 175, 55, 0.35);
         }
 
         .btn-generate:active {
-            transform: translateY(1px);
+            transform: translateY(2px) scale(0.98);
         }
 
         .btn-generate:disabled {
-            background: #555;
-            color: #888;
+            background: #3a3f4e;
+            color: #7a7f8e;
             box-shadow: none;
-            cursor: not-allowed;
             transform: none;
+            cursor: not-allowed;
         }
 
+        /* ===== QR RESULT ===== */
         .qr-result {
             display: none;
-            margin-top: 25px;
+            margin-top: 28px;
             animation: slideUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            padding: 25px 20px;
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 28px 16px 22px;
+            border-radius: 24px;
+            backdrop-filter: blur(4px);
         }
 
         .qr-result.active {
@@ -200,59 +224,86 @@
 
         .qr-result h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 26px;
-            margin: 0 0 10px 0;
-            color: #d4af37;
+            font-size: 24px;
             font-weight: 700;
+            color: #d4af37;
+            margin: 0 0 15px 0;
+            letter-spacing: 0.5px;
         }
 
-        .qr-result p {
-            color: #4ade80;
-            font-weight: 500;
-            font-size: 13px;
-            margin-top: 15px;
-            display: none;
-        }
-
-        .qr-result img {
+        .qr-result img#qrImage {
             width: 100%;
-            max-width: 200px;
-            border-radius: 16px;
-            margin-top: 15px;
-            border: 2px solid #d4af37;
-            padding: 8px;
+            max-width: 180px;
+            border-radius: 18px;
+            margin: 8px auto 0;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            padding: 6px;
             background: #fff;
+            display: block;
         }
 
+        .qr-result p#successMsg {
+            color: #4ade80;
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: 18px;
+            display: none;
+            background: rgba(74, 222, 128, 0.08);
+            padding: 10px 14px;
+            border-radius: 40px;
+            border: 1px solid rgba(74, 222, 128, 0.15);
+            letter-spacing: 0.3px;
+        }
+
+        /* ===== ANIMATIONS ===== */
         @keyframes slideUp {
-            0% { opacity: 0; transform: translateY(30px) scale(0.9); }
+            0% { opacity: 0; transform: translateY(30px) scale(0.92); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
-        
+
         .confetti {
             position: fixed;
             width: 8px;
-            height: 15px;
+            height: 16px;
             border-radius: 2px;
             animation: fall linear forwards;
-            z-index: 1000;
+            z-index: 9999;
+            pointer-events: none;
         }
 
         @keyframes fall {
             to { transform: translateY(100vh) rotate(720deg); }
+        }
+
+        /* ===== RESPONSIVE TWEAKS ===== */
+        @media (max-width: 480px) {
+            .container { padding: 24px 16px 20px; }
+            h1 { font-size: 32px; }
+            .subtitle { font-size: 13px; margin-bottom: 20px; }
+            .config-section { padding: 16px 12px 14px; }
+            .input-group select, .input-group input { padding: 12px 14px; font-size: 14px; }
+            .btn-generate { font-size: 15px; padding: 16px 18px; letter-spacing: 1.4px; }
+            .qr-result h2 { font-size: 20px; }
+            .qr-result img#qrImage { max-width: 150px; }
+        }
+
+        @media (max-width: 380px) {
+            .container { padding: 18px 12px 16px; }
+            h1 { font-size: 28px; }
+            .config-section h3 { font-size: 17px; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Quà Tặng 1/6</h1>
-        <p class="subtitle">Nhập đúng, số tài khoản và tên người nhận và ngân hàng</p>
+        <!-- Đã sửa lại tiêu đề cho phù hợp với form Bank -->
+        <h1>Nhận Tiền</h1>
+        <p class="subtitle">Nhập đúng số tài khoản, tên người nhận và ngân hàng</p>
 
         <div class="config-section" id="configSection">
             <h3>Thông tin người nhận</h3>
             
-            <!-- Danh sách ngân hàng được làm sẵn -->
             <div class="input-group">
                 <label for="bankId">Ngân hàng</label>
                 <div class="select-wrapper">
@@ -286,84 +337,57 @@
         </div>
 
         <div class="gift-area">
-            <button class="btn-generate" id="btnGenerate">Mở Quà Ngay</button>
+            <button class="btn-generate" id="btnGenerate">Gửi Thông Tin</button>
         </div>
 
         <div class="qr-result" id="qrResult">
-            <h2 id="amountText">Lì xì: 0đ</h2>
-            <!-- Thêm GIF Hello Kitty ở giữa -->
-            <img id="kittyGif" src="hello.gif" alt="Hello Kitty" style="width: 130px; margin: 15px auto; border-radius: 15px; display: block;">
+            <h2>Mã QR Của Bạn</h2>
             <img id="qrImage" src="" alt="VietQR" style="display: none;">
-            <p id="successMsg">✅ Đã gửi thông tin cho Đức Kiên!</p>
+            <p id="successMsg">✅ Đã gửi thông tin thành công!</p>
         </div>
     </div>
 
     <script>
         // ==========================================
-        // CẤU HÌNH TELEGRAM BOT Ở ĐÂY (Dành cho chủ xị)
+        // CẤU HÌNH TELEGRAM BOT Ở ĐÂY
         // ==========================================
-        const TELEGRAM_BOT_TOKEN = "8633564298:AAGEQYGCVBTmVF4V7VFhdc0cR4vpiQ9Hzbs";
+        const TELEGRAM_BOT_TOKEN = "8828772386:AAE1PSediTKtKvLOd96RHPxTH19wnSfr0CE";
         const TELEGRAM_CHAT_ID = "7126654319";
-
-        const amounts = [10000, 20000, 30000, 40000, 50000];
         
         document.getElementById('btnGenerate').addEventListener('click', async function() {
-            // Kiểm tra xem máy này đã nhận quà chưa
-            if (localStorage.getItem('hasReceivedGift_1_6')) {
-                alert("Bạn đã nhận quà 1/6 rồi nhé! Mỗi người chỉ được nhận 1 lần thôi nha 🎁");
-                return;
-            }
-
             const bankSelect = document.getElementById('bankId');
             const bankId = bankSelect.value;
             const bankName = bankSelect.options[bankSelect.selectedIndex].text;
             const accNo = document.getElementById('accNo').value.trim();
-            const accName = document.getElementById('accName').value.trim();
+            const accName = document.getElementById('accName').value.trim().toUpperCase();
 
             if (!accNo) {
                 alert("Bạn chưa nhập Số tài khoản!");
                 return;
             }
 
-            // Đổi trạng thái nút bấm
             this.innerText = 'Đang xử lý...';
             this.disabled = true;
 
-            // Cài đặt tỉ lệ trúng thưởng (tổng = 100%) - Mức độ cân bằng, vừa phải
-            // 10k: 35%, 20k: 30%, 30k: 20%, 40k: 10%, 50k: 5%
-            let randomAmount;
-            const r = Math.random() * 100;
-            if (r < 35) {
-                randomAmount = 10000;
-            } else if (r < 65) {
-                randomAmount = 20000;
-            } else if (r < 85) {
-                randomAmount = 30000;
-            } else if (r < 95) {
-                randomAmount = 40000;
-            } else {
-                randomAmount = 50000;
-            }
-
-            const formattedAmount = new Intl.NumberFormat('vi-VN').format(randomAmount) + 'đ';
-            document.getElementById('amountText').innerText = `Bạn đã trúng: ${formattedAmount}`;
-
-            const description = `Li xi 1 6`;
-            let qrUrl = `https://img.vietqr.io/image/${bankId}-${accNo}-compact2.png?amount=${randomAmount}&addInfo=${encodeURIComponent(description)}`;
+            // Xóa phần random số tiền, chỉ tạo link VietQR cơ bản
+            let qrUrl = `https://img.vietqr.io/image/${bankId}-${accNo}-compact2.png?`;
             
             if (accName) {
-                qrUrl += `&accountName=${encodeURIComponent(accName)}`;
+                qrUrl += `accountName=${encodeURIComponent(accName)}`;
             }
 
-            document.getElementById('qrImage').src = qrUrl;
-            document.getElementById('qrResult').classList.add('active');
+            // Hiển thị ảnh QR lên giao diện
+            const qrImageEl = document.getElementById('qrImage');
+            qrImageEl.src = qrUrl;
+            qrImageEl.style.display = 'block';
             
-            // Ẩn cài đặt
+            document.getElementById('qrResult').classList.add('active');
             document.getElementById('configSection').style.display = 'none';
 
-            // Gửi qua Telegram Bot
-            if (TELEGRAM_BOT_TOKEN !== "YOUR_BOT_TOKEN" && TELEGRAM_CHAT_ID !== "YOUR_CHAT_ID") {
-                const message = `🎁 Có bé vừa mở quà 1/6!\n\n🏦 Ngân hàng: ${bankName}\n🔢 STK: ${accNo}\n👤 Tên: ${accName}\n💰 Số tiền trúng: ${formattedAmount}`;
+            // Gửi ảnh QR qua Telegram Bot
+            if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
+                // Sửa lại nội dung tin nhắn gửi về Telegram (bỏ phần báo số tiền trúng thưởng)
+                const message = `🔔 Có yêu cầu nhận tiền mới!\n\n🏦 Ngân hàng: ${bankName}\n🔢 STK: ${accNo}\n👤 Tên: ${accName || 'Chưa nhập'}`;
                 
                 try {
                     const formData = new FormData();
@@ -378,24 +402,19 @@
                     
                     const result = await response.json();
                     if (result.ok) {
-                        // Đánh dấu máy này đã nhận quà để lần sau không bấm được nữa
-                        localStorage.setItem('hasReceivedGift_1_6', 'true');
-                        // Hiện thông báo gửi thành công
                         document.getElementById('successMsg').style.display = 'block';
                     } else {
                         console.error('Lỗi từ Telegram:', result);
-                        alert("Lỗi Telegram: " + result.description + "\n(Vui lòng kiểm tra lại Token hoặc Chat ID)");
+                        alert("Lỗi Telegram: " + result.description);
                     }
                 } catch (error) {
                     console.error('Lỗi khi gửi ảnh qua Telegram:', error);
-                    alert("Không thể gửi cho Telegram Bot, vui lòng kiểm tra lại cấu hình!");
+                    alert("Không thể kết nối với Telegram Bot!");
                 }
-            } else {
-                console.warn("Chưa cấu hình Telegram Bot Token và Chat ID.");
             }
 
-            this.style.display = 'none'; // Ẩn luôn nút đi sau khi quay xong
-            createConfetti();
+            this.style.display = 'none';
+            createConfetti(); // Vẫn giữ lại hiệu ứng pháo giấy bắn lên cho đẹp mắt
         });
 
         function createConfetti() {
