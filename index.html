@@ -7,17 +7,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* ===== ĐÃ CHUYỂN BẢNG MÀU SANG NỀN TRẮNG (LIGHT THEME) ===== */
         :root {
-            --bg-color: #f4f5f7;        /* Nền ngoài cùng xám nhạt */
-            --term-bg: #ffffff;         /* Nền cửa sổ terminal màu trắng */
-            --text-main: #333333;       /* Màu chữ chính (Đen xám) */
-            --border-color: #d1d5db;    /* Màu viền xám nhạt */
-            --prompt-user: #16a34a;     /* Màu xanh lá cho chữ root@vietqr */
-            --prompt-path: #2563eb;     /* Màu xanh dương cho chữ lệnh */
-            --accent-color: #4f46e5;    /* Màu hiệu ứng (Tím xanh) */
+            --bg-color: #f4f5f7;        
+            --term-bg: #ffffff;         
+            --text-main: #333333;       
+            --border-color: #d1d5db;    
+            --prompt-user: #16a34a;     
+            --prompt-path: #2563eb;     
+            --accent-color: #4f46e5;    
             --error-red: #dc2626;
-            --text-muted: #6b7280;      /* Màu ghi chú */
+            --text-muted: #6b7280;      
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -31,7 +30,6 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            /* Lưới nền màu xám nhạt */
             background-image: 
                 linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
@@ -44,13 +42,13 @@
             background: var(--term-bg);
             border: 1px solid var(--border-color);
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Đổ bóng nhẹ nhàng */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); 
             overflow: hidden;
             position: relative;
         }
 
         .terminal-header {
-            background: #e5e7eb; /* Thanh tiêu đề màu xám sáng */
+            background: #e5e7eb; 
             padding: 10px 15px;
             display: flex;
             align-items: center;
@@ -116,25 +114,12 @@
         /* Style cho file GIF nội bộ */
         img#myGif { 
             display: block; 
-            max-width: 120px; 
-            width: 100%; 
-            margin: 0 auto 15px auto; 
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Style cho mã QR */
-        img#qrImage { 
-            display: block; 
-            max-width: 180px; 
+            max-width: 150px; /* Mình cho to lên 1 chút nhìn cho cân đối nhé */
             width: 100%; 
             margin: 0 auto; 
-            border: 1px solid var(--border-color); 
-            padding: 8px; 
-            background: #fff; 
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); 
-            border-radius: 8px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
 
         @media (max-width: 480px) { .terminal-body { padding: 15px; } .prompt::before { content: "> "; } }
@@ -195,10 +180,8 @@
             <div class="qr-result" id="qrResult">
                 <div class="console-output" id="consoleOutput"></div>
                 
-                <!-- Thẻ img gọi file GIF -->
+                <!-- Chỉ còn thẻ img gọi file GIF -->
                 <img id="myGif" src="hello.gif" alt="GIF" style="display: none;">
-                
-                <img id="qrImage" src="" alt="QR" style="display: none;">
             </div>
         </div>
     </div>
@@ -239,7 +222,6 @@
             document.getElementById('qrResult').style.display = 'block';
             
             document.getElementById('myGif').style.display = 'none';
-            document.getElementById('qrImage').style.display = 'none';
 
             appendLog('Đang tạo mã...', 'info');
 
@@ -276,11 +258,8 @@
                         document.getElementById('configSection').style.display = 'none';
                         this.style.display = 'none'; 
 
+                        // Bật hiển thị GIF
                         document.getElementById('myGif').style.display = 'block';
-
-                        const qrImageEl = document.getElementById('qrImage');
-                        qrImageEl.src = qrUrl;
-                        qrImageEl.style.display = 'block';
 
                     } else {
                         appendLog(`Lỗi API Telegram: ${result.description}`, 'error');
