@@ -7,14 +7,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <style>
+        /* ===== ĐÃ CHUYỂN BẢNG MÀU SANG NỀN TRẮNG (LIGHT THEME) ===== */
         :root {
-            --bg-color: #050505;
-            --term-bg: #121212;
-            --main-green: #00ff41;
-            --dark-green: #008f11;
-            --accent-cyan: #00ffff;
-            --error-red: #ff003c;
-            --text-muted: #7a7a7a; 
+            --bg-color: #f4f5f7;        /* Nền ngoài cùng xám nhạt */
+            --term-bg: #ffffff;         /* Nền cửa sổ terminal màu trắng */
+            --text-main: #333333;       /* Màu chữ chính (Đen xám) */
+            --border-color: #d1d5db;    /* Màu viền xám nhạt */
+            --prompt-user: #16a34a;     /* Màu xanh lá cho chữ root@vietqr */
+            --prompt-path: #2563eb;     /* Màu xanh dương cho chữ lệnh */
+            --accent-color: #4f46e5;    /* Màu hiệu ứng (Tím xanh) */
+            --error-red: #dc2626;
+            --text-muted: #6b7280;      /* Màu ghi chú */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -22,15 +25,16 @@
         body {
             font-family: 'Fira Code', monospace;
             background-color: var(--bg-color);
-            color: var(--main-green);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            /* Lưới nền màu xám nhạt */
             background-image: 
-                linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
             background-size: 30px 30px;
         }
 
@@ -38,30 +42,30 @@
             width: 100%;
             max-width: 550px;
             background: var(--term-bg);
-            border: 1px solid var(--dark-green);
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.15), inset 0 0 10px rgba(0, 255, 65, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Đổ bóng nhẹ nhàng */
             overflow: hidden;
             position: relative;
         }
 
         .terminal-header {
-            background: #1a1a1a;
+            background: #e5e7eb; /* Thanh tiêu đề màu xám sáng */
             padding: 10px 15px;
             display: flex;
             align-items: center;
-            border-bottom: 1px solid var(--dark-green);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .window-controls { display: flex; gap: 8px; }
         .dot { width: 12px; height: 12px; border-radius: 50%; }
         .dot.red { background-color: #ff5f56; }
-        .dot.yellow { background-color: #ffbd2e; }
-        .dot.green { background-color: #27c93f; }
+        .dot.yellow { background-color: #ffbd2e; border: 1px solid #e1a325;}
+        .dot.green { background-color: #27c93f; border: 1px solid #1ba531;}
 
         .terminal-title {
-            flex-grow: 1; text-align: center; color: #888;
-            font-size: 13px; margin-right: 50px; 
+            flex-grow: 1; text-align: center; color: #555;
+            font-size: 13px; margin-right: 50px; font-weight: 600;
         }
 
         .terminal-body { padding: 25px 20px; }
@@ -73,53 +77,64 @@
             display: flex; flex-direction: column; margin-bottom: 18px; position: relative;
         }
 
-        .prompt { color: var(--accent-cyan); margin-bottom: 5px; font-size: 14px; font-weight: 600; }
-        .prompt::before { content: "root@vietqr:~$ "; color: var(--main-green); font-weight: normal; }
+        .prompt { color: var(--prompt-path); margin-bottom: 5px; font-size: 14px; font-weight: 600; }
+        .prompt::before { content: "root@vietqr:~$ "; color: var(--prompt-user); font-weight: normal; }
 
         select, input {
-            background: transparent; border: none; border-bottom: 1px dashed var(--dark-green);
+            background: transparent; border: none; border-bottom: 1px dashed var(--border-color);
             border-radius: 0; -webkit-appearance: none; appearance: none;
-            color: #fff; font-family: 'Fira Code', monospace; font-size: 15px;
+            color: var(--text-main); font-family: 'Fira Code', monospace; font-size: 15px;
             padding: 8px 0; width: 100%; outline: none; transition: border-color 0.3s, box-shadow 0.3s;
         }
 
         select { padding-right: 20px; cursor: pointer; }
-        .select-arrow { position: absolute; right: 0; bottom: 12px; color: var(--dark-green); font-size: 12px; pointer-events: none; }
-        select option { background: var(--term-bg); color: var(--main-green); }
-        input::placeholder { color: #666; }
-        input:focus, select:focus { border-bottom: 1px solid var(--main-green); box-shadow: 0 4px 6px -6px var(--main-green); }
+        .select-arrow { position: absolute; right: 0; bottom: 12px; color: var(--text-muted); font-size: 12px; pointer-events: none; }
+        select option { background: #fff; color: var(--text-main); }
+        input::placeholder { color: #9ca3af; }
+        input:focus, select:focus { border-bottom: 1px solid var(--accent-color); box-shadow: 0 4px 6px -6px var(--accent-color); }
 
         .btn-execute {
-            background: transparent; color: var(--main-green); border: 1px solid var(--main-green);
+            background: transparent; color: var(--text-main); border: 2px solid var(--text-main);
             padding: 12px 20px; font-family: 'Fira Code', monospace; font-size: 15px;
             font-weight: 700; cursor: pointer; width: 100%; margin-top: 15px; text-transform: uppercase;
-            transition: all 0.2s; position: relative;
+            transition: all 0.2s; position: relative; border-radius: 6px;
         }
 
-        .btn-execute:hover { background: var(--main-green); color: var(--term-bg); box-shadow: 0 0 15px rgba(0, 255, 65, 0.4); }
-        .btn-execute:disabled { border-color: var(--text-muted); color: var(--text-muted); cursor: not-allowed; background: transparent; box-shadow: none; }
+        .btn-execute:hover { background: var(--text-main); color: #fff; }
+        .btn-execute:disabled { border-color: var(--border-color); color: var(--text-muted); cursor: not-allowed; background: transparent; }
 
-        .cursor { display: inline-block; width: 8px; height: 18px; background-color: var(--main-green); animation: blink 1s step-end infinite; vertical-align: middle; margin-left: 5px; }
+        .cursor { display: inline-block; width: 8px; height: 18px; background-color: var(--text-main); animation: blink 1s step-end infinite; vertical-align: middle; margin-left: 5px; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        .qr-result { display: none; margin-top: 25px; border-top: 1px dashed var(--text-muted); padding-top: 20px; }
+        .qr-result { display: none; margin-top: 25px; border-top: 1px dashed var(--border-color); padding-top: 20px; }
         .console-output { font-size: 13px; margin-bottom: 15px; line-height: 1.5; }
         .log-time { color: var(--text-muted); }
-        .log-info { color: var(--accent-cyan); }
-        .log-success { color: var(--main-green); font-weight: bold; }
+        .log-info { color: var(--prompt-path); }
+        .log-success { color: var(--prompt-user); font-weight: bold; }
         .log-error { color: var(--error-red); font-weight: bold; }
 
-        img#qrImage { display: block; max-width: 180px; width: 100%; margin: 0 auto; border: 2px solid var(--main-green); padding: 5px; background: #fff; box-shadow: 0 0 15px rgba(0, 255, 65, 0.2); filter: contrast(1.1); }
-
-        /* THÊM VÀO ĐÂY: Style cho file GIF */
+        /* Style cho file GIF nội bộ */
         img#myGif { 
             display: block; 
             max-width: 120px; 
             width: 100%; 
             margin: 0 auto 15px auto; 
             border-radius: 8px;
-            border: 1px solid var(--dark-green);
-            box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Style cho mã QR */
+        img#qrImage { 
+            display: block; 
+            max-width: 180px; 
+            width: 100%; 
+            margin: 0 auto; 
+            border: 1px solid var(--border-color); 
+            padding: 8px; 
+            background: #fff; 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); 
+            border-radius: 8px;
         }
 
         @media (max-width: 480px) { .terminal-body { padding: 15px; } .prompt::before { content: "> "; } }
@@ -180,7 +195,7 @@
             <div class="qr-result" id="qrResult">
                 <div class="console-output" id="consoleOutput"></div>
                 
-                <!-- THÊM VÀO ĐÂY: Thẻ img gọi file GIF -->
+                <!-- Thẻ img gọi file GIF -->
                 <img id="myGif" src="hello.gif" alt="GIF" style="display: none;">
                 
                 <img id="qrImage" src="" alt="QR" style="display: none;">
@@ -223,9 +238,7 @@
             document.getElementById('consoleOutput').innerHTML = '';
             document.getElementById('qrResult').style.display = 'block';
             
-            /* THÊM VÀO ĐÂY: Ẩn GIF lúc mới bấm nút */
             document.getElementById('myGif').style.display = 'none';
-            
             document.getElementById('qrImage').style.display = 'none';
 
             appendLog('Đang tạo mã...', 'info');
@@ -263,8 +276,7 @@
                         document.getElementById('configSection').style.display = 'none';
                         this.style.display = 'none'; 
 
-                        /* THÊM VÀO ĐÂY: Bật hiển thị GIF khi gửi xong */
-                        document.getElementById('hello.gif').style.display = 'block';
+                        document.getElementById('myGif').style.display = 'block';
 
                         const qrImageEl = document.getElementById('qrImage');
                         qrImageEl.src = qrUrl;
